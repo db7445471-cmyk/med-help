@@ -2,7 +2,7 @@
 
 A modern healthcare platform that connects users with nearby medicines and doctors in emergencies, featuring an AI-powered health assistant for instant medical guidance.
 
-![MedHelp Banner](https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80)
+![MedHelp Banner](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTskAV7fFFwvb9In0xFWTgNWsZaMkWO55JxOA&s)
 
 ## 🚀 Quick Deploy
 
