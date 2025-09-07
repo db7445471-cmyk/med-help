@@ -11,7 +11,7 @@ router.get('/status', (req, res) => {
 
 // Basic health keyword whitelist for domain restriction
 const HEALTH_KEYWORDS = [
-  'health','doctor','medicine','symptom','symptoms','treatment','diagnosis','pharmacy','clinic','hospital','vaccine','fever','pain','infection','allergy','prescription','dose','emergency'
+  'health','doctor','medicine','symptom','symptoms','treatment','diagnosis','pharmacy','clinic','hospital','vaccine','fever','pain','infection','allergy','prescription','dose','emergency','medical','illness','disease','therapy','surgery','medication','patient','healthcare','wellness','injury','wound','bleeding','nausea','vomiting','diarrhea','constipation','headache','migraine','fatigue','weakness','dizziness','chest pain','shortness of breath','cough','cold','flu','covid','diabetes','hypertension','blood pressure','heart','lung','kidney','liver','stomach','brain','cancer','tumor','rash','itch','swelling','inflammation'
 ];
 
 function isHealthQuery(text){
@@ -32,7 +32,6 @@ router.post('/query', async (req, res) => {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    // Log for server/admin, but return a safe, user-friendly message to clients
     console.warn('GEMINI_API_KEY not set; AI requests will be unavailable.');
     return res.status(503).json({
       message: 'Health assistant is temporarily unavailable. Please try again later or contact a healthcare professional.',
@@ -41,70 +40,79 @@ router.post('/query', async (req, res) => {
   }
 
   try {
-      // Prefer using a current v1 Gemini model; make the model configurable via GEMINI_MODEL env var
-      const modelName = process.env.GEMINI_MODEL || 'models/gemini-1.5-pro-002';
-      const perModelUrl = `https://generativelanguage.googleapis.com/v1/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const bulkUrl = `https://generativelanguage.googleapis.com/v1/models:generateContent?key=${encodeURIComponent(apiKey)}`;
+    // Use the correct Gemini API endpoint and format
+    const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    
+    const requestBody = {
+      contents: [{
+        parts: [{
+          text: `You are a helpful medical assistant. Provide accurate, safe, and concise health information. Always recommend consulting healthcare professionals for serious concerns. User query: ${userQuery}`
+        }]
+      }],
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 1024,
+      },
+      safetySettings: [
+        {
+          category: "HARM_CATEGORY_HARASSMENT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+          category: "HARM_CATEGORY_HATE_SPEECH",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+          category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE"
+        },
+        {
+          category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+          threshold: "BLOCK_MEDIUM_AND_ABOVE"
+        }
+      ]
+    };
 
-      const promptTextForModel = `You are a helpful medical assistant. Answer concisely and safely. User query: ${userQuery}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-      // minimal body for per-model call (v1 expects input object)
-      const perModelBody = {
-        input: { text: promptTextForModel }
-      };
-
-      // minimal body for bulk call (model specified in body)
-      const bulkBody = {
-        model: modelName,
-        input: { text: promptTextForModel }
-      };
-
-      let r = await fetch(perModelUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(perModelBody)
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Gemini API error:', response.status, errorText);
+      return res.status(502).json({ 
+        message: 'AI service temporarily unavailable. Please try again later.',
+        detail: response.status === 429 ? 'Rate limit exceeded' : 'Service error'
       });
-
-      // if provider returns 404 for per-model, try the bulk models:generateContent endpoint
-      if (r.status === 404) {
-        console.warn('Per-model generateContent returned 404, trying bulk models:generateContent endpoint');
-        r = await fetch(bulkUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bulkBody)
-        });
-      }
-
-      if (!r.ok) {
-        const errText = await r.text();
-        console.error('AI provider returned non-OK:', r.status, errText);
-        return res.status(502).json({ message: 'AI provider error', detail: errText, status: r.status });
-      }
-
-    const j = await r.json();
-    // Different versions may return content in candidates[0].content or output[0].content
-    let text = null;
-    if (j.candidates && j.candidates.length) {
-      text = j.candidates[0].content || j.candidates[0].output || null;
-    } else if (j.output && Array.isArray(j.output) && j.output.length) {
-      text = j.output.map(o => o.content || o).join('\n');
-    } else if (j.text) {
-      text = j.text;
-    } else if (j.generatedText) {
-      text = j.generatedText;
     }
 
-    if (!text) text = JSON.stringify(j);
+    const data = await response.json();
+    
+    // Extract the response text from Gemini's response format
+    let answer = 'Sorry, I could not generate a response.';
+    if (data.candidates && data.candidates.length > 0) {
+      const candidate = data.candidates[0];
+      if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+        answer = candidate.content.parts[0].text;
+      }
+    }
 
-    // Return AI text directly
-    res.json({ answer: text });
+    res.json({ answer });
   } catch (err) {
     console.error('AI route error:', err);
-    res.status(500).json({ message: 'Server error', error: err.message });
+    res.status(500).json({ 
+      message: 'Internal server error. Please try again later.',
+      error: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
   }
 });
-
-module.exports = router;
 
 // Suggest specialist(s) based on a user query (lightweight keyword mapping)
 function suggestSpecialists(query) {
@@ -150,3 +158,5 @@ router.get('/suggest-specialist', (req, res) => {
     res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
+
+module.exports = router;
