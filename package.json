@@ -14,6 +14,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^6.19.0",
     "mongoose": "^7.6.0",
+    "node-fetch": "^2.7.0",
     "readline-sync": "^1.4.10"
   }
 }
