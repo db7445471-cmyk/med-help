@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Find Medicine - MedHelp</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- include header via same markup for consistency -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><i class="fa-solid fa-kit-medical"></i><span>MedHelp</span></div>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/" data-nav>Home</a></li>
+            <li><a href="/find-medicine.html" data-nav>Find Medicine</a></li>
+            <li><a href="/find-doctors.html" data-nav>Find Doctors</a></li>
+            <li><a href="/about.html" data-nav>About</a></li>
+            <li><a href="/contact.html" data-nav>Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding:40px 15px">
+    <h1>Find Medicine</h1>
+    <section class="search-section" style="max-width:900px">
+      <div class="search-form">
+        <input id="med-name" type="text" class="search-input" placeholder="Medicine name (e.g., Paracetamol)">
+        <input id="med-location" type="text" class="search-input" placeholder="Location">
+        <div class="nearby-control">
+          <label><input id="med-nearby" type="checkbox"> Available nearby</label>
+        </div>
+        <button id="med-search" class="search-btn">Search</button>
+      </div>
+    </section>
+
+    <section class="results">
+      <div class="results-grid" id="results-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container"><div class="footer-bottom">&copy; 2025 MedHelp</div></div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

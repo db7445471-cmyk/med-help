@@ -1,0 +1,23 @@
+# Node
+node_modules/
+npm-debug.log*
+.env
+.env.*
+.DS_Store
+.vscode/
+dist/
+build/
+coverage/
+
+# Logs
+logs
+*.log
+pids
+*.pid
+
+# OS files
+Thumbs.db
+.idea/
+
+# Optional lockfile
+# package-lock.json

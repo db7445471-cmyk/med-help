@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Login - MedHelp</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container" style="padding:40px">
+    <h2>Doctor Login / Register</h2>
+    <div style="max-width:520px">
+      <input id="d-email" class="search-input" placeholder="Email" />
+      <input id="d-password" class="search-input" type="password" placeholder="Password" />
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <button id="login-btn" class="search-btn">Login</button>
+        <button id="register-btn" class="search-btn">Register</button>
+      </div>
+      <p style="margin-top:12px;color:#666">Register will create an account and return a token for dashboard access.</p>
+    </div>
+  </div>
+
+  <script>
+    async function postJson(url, body){
+      const res = await fetch(url, {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)});
+      return res;
+    }
+
+    document.getElementById('login-btn').addEventListener('click', async ()=>{
+      const email = document.getElementById('d-email').value.trim();
+      const password = document.getElementById('d-password').value.trim();
+      if(!email||!password){ alert('Please provide email and password'); return; }
+      const res = await postJson('/api/auth/login',{email,password});
+      const data = await res.json();
+      if(!res.ok){ alert(data.message||'Login failed'); return; }
+      localStorage.setItem('medhelp_token', data.token);
+      location.href = '/doctor-dashboard.html';
+    });
+
+    document.getElementById('register-btn').addEventListener('click', async ()=>{
+      const email = document.getElementById('d-email').value.trim();
+      const password = document.getElementById('d-password').value.trim();
+      const name = prompt('Your name');
+      const category = prompt('Your specialization (e.g., Cardiologist)');
+      const location = prompt('Your practice location');
+      if(!email||!password||!name||!category||!location){ alert('All fields required'); return; }
+      const res = await postJson('/api/auth/register',{name,email,password,category,location});
+      const data = await res.json();
+      if(!res.ok){ alert(data.message||'Registration failed'); return; }
+      localStorage.setItem('medhelp_token', data.token);
+      location.href = '/doctor-dashboard.html';
+    });
+  </script>
+</body>
+</html>

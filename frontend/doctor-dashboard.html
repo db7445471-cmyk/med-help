@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Doctor Dashboard - MedHelp</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container" style="padding:30px">
+    <h2>Doctor Dashboard</h2>
+    <p><button id="logout">Logout</button></p>
+
+    <section style="max-width:700px;margin-top:12px">
+      <h3>Add Medicine</h3>
+      <input id="m-name" class="search-input" placeholder="Medicine name" />
+      <input id="m-location" class="search-input" placeholder="Location" />
+      <input id="m-availability" class="search-input" placeholder="Availability (number)" />
+      <button id="m-add" class="search-btn">Add Medicine</button>
+      <div id="m-result" style="margin-top:12px;color:green"></div>
+    </section>
+  </div>
+
+  <script>
+    const token = localStorage.getItem('medhelp_token');
+    if(!token){ location.href = '/doctor-login.html'; }
+    document.getElementById('logout').addEventListener('click', ()=>{ localStorage.removeItem('medhelp_token'); location.href='/'; });
+
+    document.getElementById('m-add').addEventListener('click', async ()=>{
+      const name = document.getElementById('m-name').value.trim();
+      const location = document.getElementById('m-location').value.trim();
+      const availability = Number(document.getElementById('m-availability').value.trim()) || 0;
+      if(!name||!location){ alert('Name and location required'); return; }
+      const res = await fetch('/api/medicines/add',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+token},body:JSON.stringify({name,location,availability})});
+      const data = await res.json();
+      if(!res.ok){ alert(data.message||'Error'); return; }
+      document.getElementById('m-result').textContent = 'Medicine added successfully';
+      document.getElementById('m-name').value='';document.getElementById('m-location').value='';document.getElementById('m-availability').value='';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - MedHelp</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><i class="fa-solid fa-kit-medical"></i><span>MedHelp</span></div>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/find-medicine.html">Find Medicine</a></li>
+            <li><a href="/find-doctors.html">Find Doctors</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding:40px 15px;max-width:800px">
+    <h1>Contact Us</h1>
+    <form id="contactForm">
+      <div style="margin-bottom:12px">
+        <input type="text" id="cname" placeholder="Your name" class="search-input" style="width:100%" />
+      </div>
+      <div style="margin-bottom:12px">
+        <input type="email" id="cemail" placeholder="Your email" class="search-input" style="width:100%" />
+      </div>
+      <div style="margin-bottom:12px">
+        <textarea id="cmsg" placeholder="Your message" style="width:100%;height:120px;padding:12px;border-radius:8px;border:1px solid #ddd"></textarea>
+      </div>
+      <button type="submit" class="search-btn">Send Message</button>
+    </form>
+  </main>
+
+  <footer>
+    <div class="container"><div class="footer-bottom">&copy; 2025 MedHelp</div></div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

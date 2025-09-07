@@ -1,0 +1,833 @@
+/* Minimal styles extracted from existing file */
+:root {
+	--primary: #2b7bba;
+	--secondary: #33a56e;
+	--dark: #343a40;
+	/* --gray: #6c757d */
+	--gray: #6c757d
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	/* background-color: #2b7bba; */
+	box-sizing: border-box;
+	font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif
+}
+.section-title {
+  text-align: center;
+}
+
+
+
+
+body {
+	background: #fefeff;
+	color: var(--dark);
+	line-height: 1.6
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px;
+	
+}
+
+
+
+
+
+
+body {
+	background: linear-gradient(135deg, #89f7fe, #66a6ff);
+	margin: 0;
+	font-family: Arial, sans-serif;
+}
+
+
+main {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease-out forwards;
+
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+.header {
+	background: linear-gradient(135deg, var(--primary), var(--secondary));
+	color: #fff;
+	padding: 12px 0;
+	background-color: #2b7bba;
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 700
+}
+
+.logo span {
+	font-size: 1.1rem
+}
+
+/* slightly larger logo on desktop */
+@media (min-width:900px) {
+	.logo span {
+		font-size: 1.25rem
+	}
+}
+
+/* Navbar styles */
+.main-nav ul {
+	display: flex;
+	gap: 18px;
+	list-style: none
+}
+
+.main-nav a {
+	color: #838080;
+	text-decoration: none;
+	font-weight: 600;
+	padding: 8px 10px;
+	border-radius: 8px;
+	display: inline-block;
+	
+	background: rgba(255, 255, 255, 0.06);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+}
+
+.main-nav a:hover {
+	background: rgba(255, 255, 255, 0.12)
+}
+
+/* Mobile toggle */
+.nav-toggle {
+	display: none;
+	background: transparent;
+	border: 0;
+	cursor: pointer
+}
+
+.nav-toggle .bar {
+	display: block;
+	width: 22px;
+	height: 2px;
+	background: #fff;
+	margin: 4px 0;
+	border-radius: 2px
+}
+
+.hero {
+	background: linear-gradient(rgba(43, 123, 186, .8), rgba(51, 165, 110, .8)), url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200&q=80');
+	background-size: cover;
+	color: #fff;
+	text-align: center;
+	padding: 80px 20px
+}
+
+
+
+.search-section {
+	background: #fff;
+	padding: 28px;
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+	margin: -30px auto 30px;
+	max-width: 920px;
+}
+
+.search-form {
+	display: flex;
+	gap: 10px
+}
+
+.search-input {
+	flex: 1;
+	padding: 12px 16px;
+	border: 2px solid #ddd;
+	border-radius: 8px
+}
+
+.search-btn {
+	background: var(--primary);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 20px;
+	cursor: pointer
+}
+
+.results-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 18px;
+	margin-top: 24px;
+}
+
+.result-card {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, .08)
+}
+
+footer {
+	background: var(--dark);
+	color: #fff;
+	padding: 30px 0;
+	margin-top: 40px;
+}
+
+@media (max-width:880px) {
+	.main-nav {
+		position: absolute;
+		top: 64px;
+		right: 12px;
+		background: linear-gradient(135deg, var(--primary), var(--secondary));
+		padding: 12px;
+		border-radius: 8px;
+		display: none;
+		width: calc(100% - 40px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	}
+
+	.main-nav ul {
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.nav-toggle {
+		display: block;
+	}
+
+	.header-content {
+		position: relative;
+	}
+
+	/* make hero smaller on small screens */
+	.hero {
+		padding: 48px 12px;
+	}
+}
+
+@media (max-width:600px) {
+	.hero {
+		padding: 44px 12px;
+	}
+
+	.search-form {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.search-btn {
+		width: 100%;
+		padding: 12px;
+	}
+
+	.logo span {
+		font-size: 1rem;
+	}
+}
+
+/* Page search bar (Find Doctors) */
+.page-search {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin: 18px 0
+}
+
+.page-search .search-input {
+	flex: 1;
+	padding: 12px 16px;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	background: #fff
+}
+
+.page-search .search-btn {
+	padding: 10px 18px;
+	border-radius: 8px
+}
+
+.search-tabs {
+	display: flex;
+	/* arrange children horizontally */
+	justify-content: center;
+	/* center them */
+	gap: 20px;
+	/* space between tabs */
+	margin: 20px 0;
+}
+
+.tab {
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	cursor: pointer;
+	background: #f8f9fa;
+	font-weight: 500;
+}
+
+.tab.active {
+	background: #007bff;
+	color: white;
+	border-color: #007bff;
+}
+
+/* AI header search */
+.ai-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-left: 12px
+}
+
+.ai-search .ai-input {
+	width: 320px;
+	padding: 8px 12px;
+	border-radius: 8px;
+	background: #fff;
+	color: #222;
+	border: 1px solid #ddd
+}
+
+.ai-search .search-btn {
+	padding: 8px 12px
+}
+
+/* AI modal result */
+.ai-modal {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	width: 360px;
+	max-width: 90vw;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+	padding: 12px;
+	z-index: 2000
+}
+
+.ai-modal pre {
+	white-space: pre-wrap;
+	word-break: break-word
+}
+
+@media (max-width:880px) {
+	.ai-search {
+		display: none
+	}
+
+	.ai-modal {
+		left: 10px;
+		right: 10px;
+		bottom: 12px;
+		width: auto
+	}
+}
+
+/* suggestion dropdown for AI header */
+.ai-suggest-box {
+	position: absolute;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+	z-index: 1500;
+	max-width: 360px;
+	overflow: auto
+}
+
+.ai-suggest-item {
+	padding: 8px 10px;
+	cursor: pointer
+}
+
+.ai-suggest-item:hover {
+	background: #f1f1f1
+}
+
+/* General Section Styling */
+.results {
+	padding: 50px 20px;
+	background: #f9f9f9;
+	/* light background */
+}
+
+.results .container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.section-title {
+	font-size: 2rem;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 30px;
+	color: #0e0e0e;
+	margin-top: 20px;
+}
+
+/* Grid for Results */
+.results-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 20px;
+}
+
+/* Example for each result card */
+.results-grid .card {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	padding: 20px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.results-grid .card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.section-title {
+		font-size: 1.5rem;
+	}
+}
+
+/* Minimal styles extracted from existing file */
+:root {
+	--primary: #2b7bba;
+	--secondary: #33a56e;
+	--dark: #343a40;
+	--gray: #6c757d
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif
+}
+.section-title {
+  text-align: center;
+}
+
+
+body {
+	background: #f5f7fa;
+	color: var(--dark);
+	line-height: 1.6
+}
+
+.container {
+	width: 100%;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 0 15px
+}
+
+.header {
+	background: linear-gradient(135deg, var(--primary), var(--secondary));
+	color: #fff;
+	padding: 12px 0
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-weight: 700
+}
+
+.logo span {
+	font-size: 1.1rem
+}
+
+/* slightly larger logo on desktop */
+@media (min-width:900px) {
+	.logo span {
+		font-size: 1.25rem
+	}
+}
+
+/* Navbar styles */
+.main-nav ul {
+	display: flex;
+	gap: 18px;
+	list-style: none
+}
+
+.main-nav a {
+	color: #838080;
+	text-decoration: none;
+	font-weight: 600;
+	padding: 8px 10px;
+	border-radius: 8px;
+	display: inline-block;
+	
+	background: rgba(255, 255, 255, 0.06);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .35)
+}
+
+.main-nav a:hover {
+	background: rgba(255, 255, 255, 0.12)
+}
+
+/* Center main page titles (Find Medicine / Find Doctors) and keep Available Nearby centered */
+.container > h1 {
+	text-align: center;
+	margin: 18px auto 12px;
+	font-size: 1.6rem;
+	font-weight: 700;
+}
+
+/* Mobile toggle */
+.nav-toggle {
+	display: none;
+	background: transparent;
+	border: 0;
+	cursor: pointer
+}
+
+.nav-toggle .bar {
+	display: block;
+	width: 22px;
+	height: 2px;
+	background: #fff;
+	margin: 4px 0;
+	border-radius: 2px
+}
+
+.hero {
+	background: linear-gradient(rgba(43, 123, 186, .8), rgba(51, 165, 110, .8)), url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=1200&q=80');
+	background-size: cover;
+	color: #fff;
+	text-align: center;
+	padding: 80px 20px
+}
+
+.search-section {
+	background: #fff;
+	padding: 28px;
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+	margin: -30px auto 30px;
+	max-width: 920px;
+}
+
+.search-form {
+	display: flex;
+	gap: 10px
+}
+
+.search-input {
+	flex: 1;
+	padding: 12px 16px;
+	border: 2px solid #ddd;
+	border-radius: 8px
+}
+
+.search-btn {
+	background: var(--primary);
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 20px;
+	cursor: pointer
+}
+
+.results-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 18px;
+	margin-top: 24px;
+}
+
+.result-card {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, .08)
+}
+
+footer {
+	background: var(--dark);
+	color: #fff;
+	padding: 30px 0;
+	margin-top: 40px;
+}
+
+@media (max-width:880px) {
+	.main-nav {
+		position: absolute;
+		top: 64px;
+		right: 12px;
+		background: linear-gradient(135deg, var(--primary), var(--secondary));
+		padding: 12px;
+		border-radius: 8px;
+		display: none;
+		width: calc(100% - 40px);
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	}
+
+	.main-nav ul {
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.nav-toggle {
+		display: block;
+	}
+
+	.header-content {
+		position: relative;
+	}
+
+	/* make hero smaller on small screens */
+	.hero {
+		padding: 48px 12px;
+	}
+}
+
+@media (max-width:600px) {
+	.hero {
+		padding: 44px 12px;
+	}
+
+	.search-form {
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.search-btn {
+		width: 100%;
+		padding: 12px;
+	}
+
+	.logo span {
+		font-size: 1rem;
+	}
+}
+
+/* Page search bar (Find Doctors) */
+.page-search {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin: 18px 0
+}
+
+.page-search .search-input {
+	flex: 1;
+	padding: 12px 16px;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+	background: #fff
+}
+
+.page-search .search-btn {
+	padding: 10px 18px;
+	border-radius: 8px
+}
+
+.search-tabs {
+	display: flex;
+	/* arrange children horizontally */
+	justify-content: center;
+	/* center them */
+	gap: 20px;
+	/* space between tabs */
+	margin: 20px 0;
+}
+
+.tab {
+	padding: 10px 20px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	cursor: pointer;
+	background: #f8f9fa;
+	font-weight: 500;
+}
+
+.tab.active {
+	background: #007bff;
+	color: white;
+	border-color: #007bff;
+}
+
+/* AI header search */
+.ai-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-left: 12px
+}
+
+.ai-search .ai-input {
+	width: 320px;
+	padding: 8px 12px;
+	border-radius: 8px;
+	background: #fff;
+	color: #222;
+	border: 1px solid #ddd
+}
+
+.ai-search .search-btn {
+	padding: 8px 12px
+}
+
+/* AI modal result */
+.ai-modal {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	width: 360px;
+	max-width: 90vw;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+	padding: 12px;
+	z-index: 2000
+}
+
+.ai-modal pre {
+	white-space: pre-wrap;
+	word-break: break-word
+}
+
+@media (max-width:880px) {
+	.ai-search {
+		display: none
+	}
+
+	.ai-modal {
+		left: 10px;
+		right: 10px;
+		bottom: 12px;
+		width: auto
+	}
+}
+
+/* suggestion dropdown for AI header */
+.ai-suggest-box {
+	position: absolute;
+	background: #fff;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+	z-index: 1500;
+	max-width: 360px;
+	overflow: auto
+}
+
+.ai-suggest-item {
+	padding: 8px 10px;
+	cursor: pointer
+}
+
+.ai-suggest-item:hover {
+	background: #f1f1f1
+}
+
+/* General Section Styling */
+.results {
+	padding: 50px 20px;
+	background: #f9f6f6;
+	/* light background */
+}
+
+.results .container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.section-title {
+	font-size: 2rem;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 30px;
+	color: #0e0e0e;
+	margin-top: -318px;
+}
+
+/* Grid for Results */
+.results-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	gap: 20px;
+}
+
+/* Example for each result card */
+.results-grid .card {
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+	padding: 20px;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.results-grid .card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.section-title {
+		font-size: 1.5rem;
+	}
+}
+
+/* Center Find Doctors */
+
+/* Nearby checkbox control styling */
+.nearby-control {
+	display: flex;
+	align-items: center;
+	font-size: 0.95rem;
+	color: var(--dark);
+}
+.nearby-control input[type="checkbox"] {
+	margin-right: 6px;
+}
+
+/* Nearby badge shown on results when user requested nearby */
+.nearby-badge {
+	display: inline-block;
+	background: var(--secondary);
+	color: #fff;
+	padding: 4px 8px;
+	border-radius: 999px;
+	font-size: 0.8rem;
+	margin-top: 8px;
+}
+

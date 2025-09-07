@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MedHelp - Medicine & Doctor Availability Tracker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo"><i class="fa-solid fa-kit-medical"></i><span>MedHelp</span></div>
+        <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <nav id="main-nav" class="main-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/" data-nav>Home</a></li>
+            <li><a href="/find-medicine.html" data-nav>Find Medicine</a></li>
+            <li><a href="/find-doctors.html" data-nav>Find Doctors 
+</a></li>
+            <li><a href="/about.html" data-nav>About
+              
+            </a></li>
+            <li><a href="/contact.html" data-nav>Contact</a></li>
+          </ul>
+        </nav>
+        <div class="ai-search">
+          <input id="ai-header-input" class="ai-input" placeholder="Ask a health question..." />
+          <button id="ai-header-btn" class="search-btn">Ask</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- AI result modal (inlined for header queries) -->
+  <div id="ai-modal" class="ai-modal" style="display:none">
+    <strong>Health Assistant</strong>
+    <div id="ai-modal-body"><pre id="ai-modal-pre"></pre></div>
+    <div style="text-align:right;margin-top:8px"><button id="ai-modal-close" class="search-btn">Close</button></div>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Find Medicine & Doctors in Emergencies</h1>
+      <p>Real-time availability of medicines and doctors to save lives when every second counts</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="search-section">
+      <div class="search-tabs">
+        <div class="tab active">Find Medicine</div>
+        <div class="tab">Find Doctors</div>
+      </div>
+      <div class="search-form">
+        <input type="text" class="search-input" placeholder="Enter medicine name (e.g., Paracetamol, Insulin)">
+        <input type="text" class="search-input" placeholder="Your location">
+        <button id="main-search" class="search-btn">Search</button>
+      </div>
+    </section>
+  </div>
+
+  <section class="results">
+    <div class="container">
+      <h2 class="section-title">Available Nearby</h2>
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+  </section>
+
+<!-- 
+  <button class="btn">Find Medicine</button>
+  <button class="btn">Find Doctors</button>
+  <input type="text" placeholder="Enter medicine name (e.g., Paracetamol, Insulin)">
+  <input type="text" placeholder="Your location">
+  <button class="btn">Search</button> -->
+</div>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section"><h3>About</h3><p>MedHelp connects users with nearby medicines and doctors in emergencies.</p></div>
+        <div class="footer-section"><h3>Contact</h3><p>support@medhelp.example</p></div>
+      </div>
+      <div class="footer-bottom">&copy; 2025 MedHelp — All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+ 
+
+Welcome to Med Help, your trusted companion for accessible and reliable healthcare support. Our mission is to bridge the gap between patients and doctors by providing a simple platform where you can find specialists, access health resources, and connect with care when you need it most.
+
+We believe healthcare should be easy, fast, and approachable. Whether you’re searching for the right doctor, learning about treatments, or looking for medical guidance, Med Help is here to guide you every step of the way.
+
+With a commitment to trust, transparency, and care, we aim to empower individuals to make informed health decisions and bring quality healthcare within everyone’s reach.
