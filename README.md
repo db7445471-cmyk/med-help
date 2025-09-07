@@ -4,6 +4,10 @@ A modern healthcare platform that connects users with nearby medicines and docto
 
 ![MedHelp Banner](https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?auto=format&fit=crop&w=1200&q=80)
 
+## 🚀 Quick Deploy
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
 ## ✨ Features
 
 ### 🤖 AI Health Assistant
@@ -31,7 +35,7 @@ A modern healthcare platform that connects users with nearby medicines and docto
 - MongoDB (local or Atlas)
 - Google Gemini API key
 
-### Installation
+### Local Development
 
 1. **Clone the repository**
    ```bash
@@ -55,7 +59,7 @@ A modern healthcare platform that connects users with nearby medicines and docto
    JWT_SECRET=your-super-secret-jwt-key-here
    GEMINI_API_KEY=your-gemini-api-key-here
    GEMINI_MODEL=gemini-1.5-flash
-   PORT=3000
+   PORT=5000
    NODE_ENV=development
    ```
 
@@ -74,13 +78,49 @@ A modern healthcare platform that connects users with nearby medicines and docto
    ```
 
 6. **Access the application**
-   - Open your browser and go to `http://localhost:3000`
-   - The AI Health Assistant will be available at `http://localhost:3000/health-ai.html`
+   - Open your browser and go to `http://localhost:5000`
+   - The AI Health Assistant will be available at `http://localhost:5000/health-ai.html`
+
+## 🌐 Deployment
+
+### Deploy to Render (Recommended)
+
+1. **Fork this repository** to your GitHub account
+
+2. **Create a Render account** at [render.com](https://render.com)
+
+3. **Connect your repository**:
+   - Click "New +" → "Web Service"
+   - Connect your GitHub account
+   - Select your forked repository
+
+4. **Configure deployment**:
+   ```
+   Build Command: npm install
+   Start Command: npm start
+   ```
+
+5. **Set environment variables**:
+   - `MONGODB_URI`: Your MongoDB connection string
+   - `JWT_SECRET`: A secure random string
+   - `GEMINI_API_KEY`: Your Google Gemini API key
+   - `NODE_ENV`: production
+
+6. **Deploy**: Click "Create Web Service"
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+### Other Platforms
+- **Vercel**: One-click deployment with automatic HTTPS
+- **Heroku**: Container-based deployment
+- **DigitalOcean**: App Platform deployment
+- **Railway**: GitHub integration deployment
 
 ## 🏗️ Project Structure
 
 ```
 med-help/
+├── server.js               # Main server file (Render-optimized)
 ├── backend/
 │   ├── middleware/          # Authentication middleware
 │   ├── models/             # Database models
@@ -89,8 +129,7 @@ med-help/
 │   │   ├── authRoutes.js   # Authentication
 │   │   ├── doctorRoutes.js # Doctor management
 │   │   └── medicineRoutes.js # Medicine search
-│   ├── seed.js             # Database seeding
-│   └── server.js           # Express server
+│   └── server.js           # Original backend server
 ├── frontend/
 │   ├── index.html          # Homepage
 │   ├── health-ai.html      # AI assistant page
@@ -100,6 +139,9 @@ med-help/
 │   └── script.js           # Frontend JavaScript
 ├── scripts/                # Utility scripts
 ├── .env.example           # Environment template
+├── render.yaml            # Render deployment config
+├── Dockerfile             # Container deployment
+├── DEPLOYMENT.md          # Detailed deployment guide
 ├── package.json           # Dependencies
 └── README.md              # This file
 ```
@@ -111,6 +153,9 @@ med-help/
 - `POST /api/ai/query` - Ask health questions
 - `GET /api/ai/suggest-specialist` - Get specialist recommendations
 
+### Health Check
+- `GET /health` - Server health status (for monitoring)
+
 ### Authentication
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
@@ -118,7 +163,7 @@ med-help/
 ### Medicine & Doctors
 - `GET /api/medicines` - Search medicines
 - `GET /api/doctors` - Find doctors
-- `GET /api/location` - Location services
+- `GET /api/locations` - Location services
 
 ## 🤖 AI Assistant Usage
 
@@ -168,23 +213,21 @@ The AI Health Assistant is designed to provide safe, reliable health information
 
 - **Input Validation**: All user inputs are validated and sanitized
 - **Health Query Filtering**: AI only responds to health-related questions
-- **Rate Limiting**: API endpoints are rate-limited
 - **Environment Variables**: Sensitive data stored securely
 - **HTTPS Ready**: SSL/TLS support for production
+- **CORS Configuration**: Proper cross-origin resource sharing
 
-## 🚀 Deployment
+## 📊 Monitoring
 
-### Environment Setup
-1. Set `NODE_ENV=production`
-2. Use a production MongoDB instance
-3. Configure proper JWT secrets
-4. Set up SSL certificates
+### Health Checks
+- Server health endpoint: `/health`
+- Database connection monitoring
+- AI service status checking
 
-### Recommended Platforms
-- **Vercel**: Easy deployment with automatic HTTPS
-- **Heroku**: Simple container deployment
-- **DigitalOcean**: Full control with droplets
-- **AWS**: Scalable cloud infrastructure
+### Logging
+- Structured logging for debugging
+- Error tracking and reporting
+- Performance monitoring
 
 ## 🤝 Contributing
 
@@ -200,14 +243,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-- **Documentation**: Check this README and code comments
+- **Documentation**: Check this README and [DEPLOYMENT.md](DEPLOYMENT.md)
 - **Issues**: Report bugs via GitHub Issues
-- **Email**: support@medhelp.example
+- **Deployment Help**: See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed guides
 - **Emergency**: Always call your local emergency services for medical emergencies
 
 ## 🙏 Acknowledgments
 
 - **Google Gemini AI**: For powering our health assistant
+- **Render**: For excellent deployment platform
 - **Font Awesome**: For beautiful icons
 - **Unsplash**: For high-quality healthcare images
 - **Inter Font**: For excellent typography
@@ -215,3 +259,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **⚠️ Medical Disclaimer**: This application provides general health information only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of qualified healthcare providers with questions about medical conditions.
+
+**🚀 Ready to Deploy?** Check out our [deployment guide](DEPLOYMENT.md) for step-by-step instructions!
