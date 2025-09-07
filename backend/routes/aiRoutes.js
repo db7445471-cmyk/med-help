@@ -3,6 +3,12 @@ const fetch = global.fetch || require('node-fetch');
 
 const router = express.Router();
 
+// GET /api/ai/status -> returns whether AI key is configured (safe admin/info)
+router.get('/status', (req, res) => {
+  const configured = !!process.env.GEMINI_API_KEY;
+  res.json({ aiEnabled: configured });
+});
+
 // Basic health keyword whitelist for domain restriction
 const HEALTH_KEYWORDS = [
   'health','doctor','medicine','symptom','symptoms','treatment','diagnosis','pharmacy','clinic','hospital','vaccine','fever','pain','infection','allergy','prescription','dose','emergency'
@@ -35,28 +41,45 @@ router.post('/query', async (req, res) => {
   }
 
   try {
-    // Use Google's Generative Language endpoint (text-bison) as default
-    const url = `https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generate?key=${encodeURIComponent(apiKey)}`;
+      // Prefer using a current v1 Gemini model; make the model configurable via GEMINI_MODEL env var
+      const modelName = process.env.GEMINI_MODEL || 'models/gemini-1.5-pro-002';
+      const perModelUrl = `https://generativelanguage.googleapis.com/v1/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const bulkUrl = `https://generativelanguage.googleapis.com/v1/models:generateContent?key=${encodeURIComponent(apiKey)}`;
 
-    const promptTextForModel = `You are a helpful medical assistant. Answer concisely and safely. User query: ${userQuery}`;
+      const promptTextForModel = `You are a helpful medical assistant. Answer concisely and safely. User query: ${userQuery}`;
 
-    const body = {
-      prompt: { text: promptTextForModel },
-      temperature: 0.2,
-      maxOutputTokens: 512
-    };
+      // minimal body for per-model call (v1 expects input object)
+      const perModelBody = {
+        input: { text: promptTextForModel }
+      };
 
-    const r = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
+      // minimal body for bulk call (model specified in body)
+      const bulkBody = {
+        model: modelName,
+        input: { text: promptTextForModel }
+      };
 
-    if (!r.ok) {
-      const errText = await r.text();
-      console.error('AI provider returned non-OK:', r.status, errText);
-      return res.status(502).json({ message: 'AI provider error', detail: errText });
-    }
+      let r = await fetch(perModelUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(perModelBody)
+      });
+
+      // if provider returns 404 for per-model, try the bulk models:generateContent endpoint
+      if (r.status === 404) {
+        console.warn('Per-model generateContent returned 404, trying bulk models:generateContent endpoint');
+        r = await fetch(bulkUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bulkBody)
+        });
+      }
+
+      if (!r.ok) {
+        const errText = await r.text();
+        console.error('AI provider returned non-OK:', r.status, errText);
+        return res.status(502).json({ message: 'AI provider error', detail: errText, status: r.status });
+      }
 
     const j = await r.json();
     // Different versions may return content in candidates[0].content or output[0].content
