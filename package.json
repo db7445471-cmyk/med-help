@@ -1,12 +1,30 @@
 {
   "name": "medhelp",
   "version": "1.0.0",
-  "main": "backend/server.js",
+  "description": "Medicine & Doctor Availability Tracker with AI Health Assistant",
+  "main": "server.js",
   "type": "commonjs",
-  "scripts": {
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
   },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "echo 'No build step required for this project'",
+    "test": "echo 'No tests specified' && exit 0"
+  },
+  "keywords": [
+    "healthcare",
+    "medicine",
+    "doctor",
+    "ai",
+    "health-assistant",
+    "emergency",
+    "medical"
+  ],
+  "author": "MedHelp Team",
+  "license": "MIT",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
@@ -16,5 +34,16 @@
     "mongoose": "^7.6.0",
     "node-fetch": "^2.7.0",
     "readline-sync": "^1.4.10"
-  }
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/db7445471-cmyk/med-help.git"
+  },
+  "bugs": {
+    "url": "https://github.com/db7445471-cmyk/med-help/issues"
+  },
+  "homepage": "https://github.com/db7445471-cmyk/med-help#readme"
 }
