@@ -30,12 +30,38 @@ app.use((req, res, next) => {
   }
 });
 
-// MongoDB Connection
-const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/medhelp";
-mongoose
-  .connect(mongoUri)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch((err) => console.error("❌ MongoDB Error:", err.message));
+// MongoDB Connection with in-memory fallback for development
+async function connectMongo() {
+  const defaultUri = process.env.MONGODB_URI || process.env.MONGO_URI || "mongodb://127.0.0.1:27017/medhelp";
+  try {
+    await mongoose.connect(defaultUri, { dbName: 'medhelp' });
+    console.log("✅ MongoDB Connected");
+    return;
+  } catch (err) {
+    console.error("❌ MongoDB Error:", err.message);
+    // In development, automatically start an in-memory MongoDB
+    if ((process.env.NODE_ENV || 'development') === 'development') {
+      console.log('⚙️  Attempting to start in-memory MongoDB (development fallback)...');
+      try {
+        const { MongoMemoryServer } = require('mongodb-memory-server');
+        const mongod = await MongoMemoryServer.create();
+        const memUri = mongod.getUri();
+        await mongoose.connect(memUri);
+        console.log('🟢 Connected to in-memory MongoDB');
+        // keep reference so the process doesn't exit and so we could stop it later if needed
+        process.__MONGOD__ = mongod;
+        return;
+      } catch (memErr) {
+        console.error('❌ In-memory MongoDB Error:', memErr.message);
+      }
+    }
+
+    // If we reach here, connection failed
+    console.error('❌ Unable to connect to MongoDB. Continuing without DB — some endpoints may fail.');
+  }
+}
+
+connectMongo();
 
 // API Routes
 app.use("/api/medicines", medicineRoutes);
