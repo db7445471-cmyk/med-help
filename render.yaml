@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: medhelp
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: medhelp-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: GEMINI_API_KEY
+        sync: false  # This needs to be set manually in Render dashboard
+      - key: GEMINI_MODEL
+        value: gemini-1.5-flash
+
+databases:
+  - name: medhelp-db
+    databaseName: medhelp
+    user: medhelp_user
+    plan: free
